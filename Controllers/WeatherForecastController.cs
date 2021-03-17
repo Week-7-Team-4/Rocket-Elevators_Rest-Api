@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Rocket_Elevators_Rest_Api.Controllers
+namespace buildingapi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

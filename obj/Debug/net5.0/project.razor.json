@@ -1,5 +1,5 @@
 {
-  "FilePath": "c:\\Users\\d_duq\\OneDrive\\Bureau\\making a rest api\\Rocket-Elevators_Rest-Api\\Rocket-Elevators_Rest-Api.csproj",
+  "FilePath": "c:\\Users\\d_duq\\OneDrive\\Bureau\\making a rest api\\BuildingApi\\BuildingApi.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "5.0",
@@ -15600,7 +15600,7 @@
     ],
     "CSharpLanguageVersion": 900
   },
-  "RootNamespace": "Rocket_Elevators_Rest_Api",
+  "RootNamespace": "BuildingApi",
   "Documents": [],
   "SerializationFormat": "0.2"
 }
