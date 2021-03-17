@@ -20,14 +20,14 @@ namespace buildingapi.Controllers
             _context = context;
         }
 
-        // Retrieving of a list of columns
+        // Retrieving of a list of Elevators
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Elevators>>> Getelevators()
         {
             return await _context.Elevators.ToListAsync();
         }
 
-        // Retrieving of a specific Column using the id
+        // Retrieving of a specific Elevators using the id
         [HttpGet("{id}")]
         public async Task<ActionResult<Elevators>> GetelevatorsById(long id)
         {
@@ -62,7 +62,7 @@ namespace buildingapi.Controllers
         public async Task<ActionResult<List<Elevators>>> GetinactiveElevators()
         {
             var elevator = await _context.Elevators
-                .Where(e => e.Status.Contains("Inactive")).ToListAsync();
+            .Where(e => e.Status != "Online").ToListAsync();
                 
 
             if (elevator == null)
