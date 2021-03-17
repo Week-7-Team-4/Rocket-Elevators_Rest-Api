@@ -1,6 +1,6 @@
 using System;
 
-namespace Rocket_Elevators_Rest_Api
+namespace buildingapi
 {
     public class WeatherForecast
     {
