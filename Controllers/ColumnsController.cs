@@ -20,16 +20,15 @@ namespace buildingapi.Controllers
             _context = context;
         }
 
-        //Action that gives the list of all columns
-        // GET: api/columns
+
+        // Retrieving of a list of columns
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Columns>>> Getcolumns()
         {
             return await _context.Columns.ToListAsync();
         }
 
-         // Action that recuperates a given column 
-        // GET: api/columns/id
+        // Retrieving of a specific Column using the id
         [HttpGet("{id}")]
         public async Task<ActionResult<Columns>> Getcolumns(long id)
         {
@@ -44,7 +43,7 @@ namespace buildingapi.Controllers
         }
 
        
-        //retrieval of a column status
+        // Retrieving the current status of a specific Column
         [HttpGet("{id}/status")]
         public async Task<ActionResult<string>> GetcolumnStatus(long id)
         {
@@ -60,9 +59,9 @@ namespace buildingapi.Controllers
         }
 
         
-        //function called when updating a column status
-        // PUT: using the the id to identify the column and the string which will be the new status        
-        [HttpPut("{id}/updatestatus")]
+
+        // setting the column status to a new one        
+        [HttpPut("{id}/status")]
         public async Task<IActionResult> PutmodifyColumnStatus(long id, string Status)
         {
             if (Status == null)

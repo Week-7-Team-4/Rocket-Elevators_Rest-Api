@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using buildingapi.Model;
 
-namespace RocketElevatorsApi.Controllers
+namespace buildingapi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -20,15 +20,14 @@ namespace RocketElevatorsApi.Controllers
             _context = context;
         }
 
-        // GET: api/elevators
+        // Retrieving of a list of columns
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Elevators>>> Getelevators()
         {
             return await _context.Elevators.ToListAsync();
         }
 
-         // Action that recuperates a given elevators by Id 
-        // GET: api/elevators/id
+        // Retrieving of a specific Column using the id
         [HttpGet("{id}")]
         public async Task<ActionResult<Elevators>> GetelevatorsById(long id)
         {
@@ -43,7 +42,7 @@ namespace RocketElevatorsApi.Controllers
         }
 
        
-        //Action that recuperates the status of a given elevator
+        //Retrieving the current status of a specific Elevator
         [HttpGet("{id}/status")]
         public async Task<ActionResult<string>> GetelevatorStatus(long id)
         {
@@ -53,18 +52,17 @@ namespace RocketElevatorsApi.Controllers
             {
                 return NotFound();
             }
-
+            
             return elevator.Status;
         }
 
 
-        //Action that gives the list of inactive elevators
-        //GET : api/elevators/inactiveelevators
-        [HttpGet("inactiveelevators")]
+        // Retrieving a list of Elevators that are not in operation at the time of the request
+        [HttpGet("inactive")]
         public async Task<ActionResult<List<Elevators>>> GetinactiveElevators()
         {
             var elevator = await _context.Elevators
-                .Where(c => c.Status.Contains("Inactive")).ToListAsync();
+                .Where(e => e.Status.Contains("Inactive")).ToListAsync();
                 
 
             if (elevator == null)
@@ -77,9 +75,8 @@ namespace RocketElevatorsApi.Controllers
 
 
        
-        //Updating the status of a given elevator. Frist, identification of the elevator is needed.
-        // PUT: api/elevators/id/updatestatus        
-        [HttpPut("{id}/updatestatus")]
+        //Changing the status of a specific Elevator       
+        [HttpPut("{id}/setStatus")]
         public async Task<IActionResult> PutmodifyElevatorStatus(long id, string status)
         {
             if (status == null)

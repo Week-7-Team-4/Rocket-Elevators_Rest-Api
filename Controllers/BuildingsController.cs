@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using buildingapi.Model;
 
 
-namespace RocketElevatorsApi.Controllers
+namespace buildingapi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -22,16 +22,16 @@ namespace RocketElevatorsApi.Controllers
             _context = context;
         }
 
-        
+        // getting the list of all buildings
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Buildings>>> Getbuildings()
         {
             return await _context.Buildings.ToListAsync();
         }
         
-        // Action that gives the list of buildings
-        // GET: api/buildings/listofbuildings
-        [HttpGet("listofbuildings")]
+        
+        // 
+        [HttpGet("list")]
         public async Task<ActionResult<IEnumerable<Buildings>>> GetbuildingList()
         {
          
