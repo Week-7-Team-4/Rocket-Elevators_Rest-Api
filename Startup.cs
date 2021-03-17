@@ -2,17 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using buildingapi.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace Rocket_Elevators_Rest_Api
+namespace buildingapi
 {
     public class Startup
     {
@@ -27,10 +29,16 @@ namespace Rocket_Elevators_Rest_Api
         public void ConfigureServices(IServiceCollection services)
         {
 
+
+ services.AddCors();
+
+            services.AddDbContext<MaximeAuger_mysqlContext>(options =>
+            options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rocket_Elevators_Rest_Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "buildingapi", Version = "v1" });
             });
         }
 
@@ -41,7 +49,7 @@ namespace Rocket_Elevators_Rest_Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rocket_Elevators_Rest_Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "buildingapi v1"));
             }
 
             app.UseHttpsRedirection();
