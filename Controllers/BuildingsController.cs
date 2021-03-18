@@ -40,7 +40,7 @@ namespace buildingapi.Controllers
                             join bat in _context.Batteries on cust.Id equals bat.BuildingId
                             join col in _context.Columns on bat.Id equals col.BatteryId
                             join ele in _context.Elevators on col.Id equals ele.ColumnId
-                            where ele.Status == "Intervention" || col.Status == "Intervention" || bat.Status == "Intervention"
+                            where ele.Status == "Offline" || col.Status == "Offline" || bat.Status == "Offline"
                             select cust).Distinct().ToListAsync();
                   
             if (building == null)
@@ -50,6 +50,27 @@ namespace buildingapi.Controllers
 
             return building;
         }
+
+        [HttpGet("gh")]
+        public async Task<ActionResult<IEnumerable<Buildings>>> GetbuildingListh()
+        {
+         
+            
+             var building = await (from cust in _context.Buildings
+                            join bat in _context.Batteries on cust.Id equals bat.BuildingId
+                            join col in _context.Columns on bat.Id equals col.BatteryId
+                            join ele in _context.Elevators on col.Id equals ele.ColumnId
+                            where ele.Status == "Online" || col.Status == "Online" || bat.Status == "Online"
+                            select cust).Distinct().ToListAsync();
+                  
+            if (building == null)
+            {
+                return NotFound();
+            }
+
+            return building;
+        }
+        
     }
 
 }
