@@ -11,11 +11,11 @@ namespace BuildingApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BuildingController : ControllerBase
+    public class LeadsController : ControllerBase
     {
         private readonly MaximeAuger_mysqlContext _context;
 
-        public BuildingController(MaximeAuger_mysqlContext context)
+        public LeadsController(MaximeAuger_mysqlContext context)
         {
             _context = context;
         }

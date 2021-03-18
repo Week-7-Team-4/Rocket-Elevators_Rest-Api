@@ -1,65 +1,56 @@
-// using System;
-// using System.Collections.Generic;
-// using Microsoft.EntityFrameworkCore;
-// using System.Linq;
-// using System.Threading.Tasks;
-// using BuildingApi.Models;
-// using Microsoft.AspNetCore.Mvc;
-// using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+using BuildingApi.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-// namespace BuildingApi.Controllers
-// {
-//     [ApiController]
-//     [Route("[controller]")]
-//     public class BuildingController : ControllerBase
-//     {
-//         private readonly MaximeAuger_mysqlContext _context;
+namespace BuildingApi.Controllers
 
-//         public BuildingController(MaximeAuger_mysqlContext context)
-//         {
-//             _context = context;
-//         }
+    
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class BuildingController : ControllerBase
 
-//         // GET: api/leads
-//         [HttpGet]
-//         public async Task<ActionResult<IEnumerable<Leads>>> Getleads()
-//         {
+    {
+        private readonly MaximeAuger_mysqlContext _context;
 
-//             return await _context.Leads.ToListAsync();
-//         }
-
-
-//         // Action that recuperates a given Leads
-//         // GET: api/leads/id
-//         // [HttpGet("{id}")]
-//         // public async Task<ActionResult<Leads>> GetleadsId(long Id)
-//         // {
-//         //     var leads = await _context.Leads.FindAsync(Id);
-
-//         //     if (leads == null)
-//         //     {
-//         //         return NotFound();
-//         //     }
-
-//         //     return leads;
-//         // }
+        public BuildingController(MaximeAuger_mysqlContext context)
+        {
+            _context = context;
+        }
 
         
-//         // Action that recuperates a given Leads
-//         // GET: api/leads/leadsNoCustomer}
-//         [HttpGet("{leadsNoCustomer}")]
-//         public async Task<ActionResult<List<Leads>>> GetleadsCustomers()
-//         {
-//             var leads = await _context.Leads.Where(l => l.customers_id == null).ToListAsync();
-//             var newLeads = leads.Where(e => e.created_at >= DateTime.Today.AddDays(-30)).ToList();
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Buildings>>> Getbuildings()
+        {
+            return await _context.Buildings.ToListAsync();
+        }
+        
+        // Action that gives the list of buildings
+        // GET: api/buildings/listofbuildings
+        [HttpGet("listofbuildings")]
+        public async Task<ActionResult<IEnumerable<Buildings>>> GetbuildingList()
+        {
+         
+            
+             var building = await (from cust in _context.Buildings
+                            join bat in _context.Batteries on cust.Id equals bat.BuildingId
+                            join col in _context.Columns on bat.Id equals col.BatteryId
+                            join ele in _context.Elevators on col.Id equals ele.ColumnId
+                            where ele.Status == "Offline" || col.Status == "Offline" || bat.Status == "Offline"
+                            select cust).Distinct().ToListAsync();
+                  
+            if (building == null)
+            {
+                return NotFound();
+            }
 
-//             if (leads == null)
-//             {
-//                 return NotFound();
-//             }
+            return building;
+        }
+    }
 
-//             return newLeads;
-//         }
-//     }
-// }
-
+}
